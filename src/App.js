@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
-function App() {
+function App({ initialTasks }) {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState(initialTasks || []);
+
+  function addTodo(e) {
+    if(task) {
+      setTasks([...tasks, { id: tasks.length + 1, title: task}]);
+      setTask("");
+    }
+  }
+
+  async function downloadTodos() {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await response.json();
+    setTasks(data);
+  }
+
+
+  useEffect(()=> {
+    downloadTodos();
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>ToDo App</h1>
+      <input type="text" placeholder="Add a task" value={task} onChange={(e) => setTask(e.target.value)}/>
+      <button onClick={addTodo}>Add Task</button>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>{task.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }
