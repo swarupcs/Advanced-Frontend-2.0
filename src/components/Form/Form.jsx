@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './Form.css';
 import validatePassword from '../../helper/passwordValidator';
 import validateEmail from '../../helper/emailValidator';
 
 function Form() {
+
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -11,18 +15,20 @@ function Form() {
 
   const handleValidatePassword = () => {
     const password = formValues.password;
-    if(!validatePassword(password)) {
-    console.log("password doesnot contain all required characters");
-  }
-}
+    if (!validatePassword(password)) {
+      passwordRef.current.focus();
+      console.log('password doesnot contain all required characters');
+    }
+  };
 
-const handleValidateEmail = () => {
+  const handleValidateEmail = () => {
     const email = formValues.email;
     // Assuming you have a validateEmail function similar to validatePassword
     if (!validateEmail(email)) {
-      console.log("Invalid email format");
+      emailRef.current.focus();
+      console.log('Invalid email format');
     }
-  }
+  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -36,8 +42,10 @@ const handleValidateEmail = () => {
       <form onSubmit={handleFormSubmit}>
         <div className='wrapper input-wrapper'>
           <input
+            id='email-input'
             type='text'
             value={formValues.email}
+            ref={emailRef}
             onChange={(event) =>
               setFormValues({ ...formValues, email: event.target.value })
             }
@@ -45,7 +53,9 @@ const handleValidateEmail = () => {
         </div>
         <div className='wrapper input-wrapper'>
           <input
+            id='password-input'
             type='password'
+            ref={passwordRef}
             value={formValues.password}
             onChange={(event) =>
               setFormValues({ ...formValues, password: event.target.value })
