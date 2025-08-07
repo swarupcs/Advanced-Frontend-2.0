@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import './Form.css';
 import validatePassword from '../../helper/passwordValidator';
 import validateEmail from '../../helper/emailValidator';
+import Input from '../Input/Input';
 
 function Form() {
 
@@ -41,7 +42,7 @@ function Form() {
       New Form
       <form onSubmit={handleFormSubmit}>
         <div className='wrapper input-wrapper'>
-          <input
+          {/* <input
             id='email-input'
             type='text'
             value={formValues.email}
@@ -49,10 +50,12 @@ function Form() {
             onChange={(event) =>
               setFormValues({ ...formValues, email: event.target.value })
             }
-          />
+          /> */}
+
+          <Input id='email-input' type='text' />
         </div>
         <div className='wrapper input-wrapper'>
-          <input
+          {/* <input
             id='password-input'
             type='password'
             ref={passwordRef}
@@ -60,7 +63,8 @@ function Form() {
             onChange={(event) =>
               setFormValues({ ...formValues, password: event.target.value })
             }
-          />
+          /> */}
+          <Input id='password-input' type='password' />
         </div>
         <input type='submit' />
       </form>
