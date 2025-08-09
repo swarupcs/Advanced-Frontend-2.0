@@ -1,70 +1,25 @@
-import { useRef, useState } from 'react';
 import './Form.css';
-import validatePassword from '../../helper/passwordValidator';
-import validateEmail from '../../helper/emailValidator';
+
 import Input from '../Input/Input';
+import { useContext } from 'react';
+import { FormContext } from '../../providers/FormContext';
 
 function Form() {
-
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const [formValues, setFormValues] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleValidatePassword = () => {
-    const password = formValues.password;
-    if (!validatePassword(password)) {
-      passwordRef.current.focus();
-      console.log('password doesnot contain all required characters');
-    }
-  };
-
-  const handleValidateEmail = () => {
-    const email = formValues.email;
-    // Assuming you have a validateEmail function similar to validatePassword
-    if (!validateEmail(email)) {
-      emailRef.current.focus();
-      console.log('Invalid email format');
-    }
-  };
-
+  const {formInput} = useContext(FormContext);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    handleValidateEmail();
-    handleValidatePassword();
+    console.log("formInput", formInput);
   };
 
   return (
     <div>
       New Form
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} noValidate>
         <div className='wrapper input-wrapper'>
-          {/* <input
-            id='email-input'
-            type='text'
-            value={formValues.email}
-            ref={emailRef}
-            onChange={(event) =>
-              setFormValues({ ...formValues, email: event.target.value })
-            }
-          /> */}
-
-          <Input id='email-input' type='text' />
+          <Input id='email-input' type='text' label='email' />
         </div>
         <div className='wrapper input-wrapper'>
-          {/* <input
-            id='password-input'
-            type='password'
-            ref={passwordRef}
-            value={formValues.password}
-            onChange={(event) =>
-              setFormValues({ ...formValues, password: event.target.value })
-            }
-          /> */}
-          <Input id='password-input' type='password' />
+          <Input id='password-input' type='password' label='password' />
         </div>
         <input type='submit' />
       </form>
@@ -73,3 +28,4 @@ function Form() {
 }
 
 export default Form;
+
