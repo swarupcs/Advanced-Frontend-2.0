@@ -3,6 +3,8 @@ import './Form.css';
 import Input from '../Input/Input';
 import { useContext, useRef } from 'react';
 import { FormContext } from '../../providers/FormContext';
+import validateEmail from '../../helper/emailValidator';
+import validatePassword from '../../helper/passwordValidator';
 
 function Form() {
   const {formInput} = useContext(FormContext);
@@ -10,9 +12,16 @@ function Form() {
   const passwordRef = useRef(null);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("formInput", formInput);
-    emailRef.current.setInvalid();
-    emailRef.current.shake();
+    if(!validateEmail(formInput.email)) {
+      emailRef.current.setInvalid();
+      emailRef.current.shake();
+    }
+
+    if(!validatePassword(formInput.password)) {
+      passwordRef.current.setInvalid();
+      passwordRef.current.shake();
+    }
+
   };
 
   return (

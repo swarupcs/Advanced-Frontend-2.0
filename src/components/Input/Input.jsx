@@ -46,6 +46,8 @@ const Input = React.forwardRef(({ type, id, label }, ref) => {
           setFormInput({ ...formInput, [label]: e.target.value });
         }}
       />
+      <br />
+      <span> {!isValid ? `${label} is invalid` : ''}</span>
     </>
   );
 });
