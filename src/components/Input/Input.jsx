@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { FormContext } from '../../providers/FormContext';
 import './Input.css';
-const Input = React.forwardRef(({ type, id, label }, ref) => {
+const Input = React.forwardRef(({ type, id, label, checkOnBlur }, ref) => {
   const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState('');
   const [isValid, setIsValid] = useState(true);
@@ -19,7 +19,7 @@ const Input = React.forwardRef(({ type, id, label }, ref) => {
   useEffect(() => {
     setIsValid(true);
     setShake(false);
-  }, [text])
+  }, [text]);
 
   useImperativeHandle(
     ref,
@@ -39,6 +39,7 @@ const Input = React.forwardRef(({ type, id, label }, ref) => {
         className={`${!isValid ? 'error-input' : ''} ${shake ? 'shake' : ''} `}
         ref={localRef}
         type={type}
+        onBlur={checkOnBlur}
         id={id}
         value={text}
         onChange={(e) => {

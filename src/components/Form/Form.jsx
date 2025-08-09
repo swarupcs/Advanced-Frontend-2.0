@@ -7,21 +7,27 @@ import validateEmail from '../../helper/emailValidator';
 import validatePassword from '../../helper/passwordValidator';
 
 function Form() {
-  const {formInput} = useContext(FormContext);
+  const { formInput } = useContext(FormContext);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if(!validateEmail(formInput.email)) {
+    handleInvalidEmail();
+    handleInvalidPassword();
+  };
+
+  const handleInvalidEmail = () => {
+    if (!validateEmail(formInput.email)) {
       emailRef.current.setInvalid();
       emailRef.current.shake();
     }
+  };
 
-    if(!validatePassword(formInput.password)) {
+  const handleInvalidPassword = () => {
+    if (!validatePassword(formInput.password)) {
       passwordRef.current.setInvalid();
       passwordRef.current.shake();
     }
-
   };
 
   return (
@@ -29,10 +35,22 @@ function Form() {
       New Form
       <form onSubmit={handleFormSubmit} noValidate>
         <div className='wrapper input-wrapper'>
-          <Input id='email-input' type='text' label='email' ref = {emailRef} />
+          <Input
+            id='email-input'
+            type='text'
+            label='email'
+            ref={emailRef}
+            checkOnBlur={handleInvalidEmail}
+          />
         </div>
         <div className='wrapper input-wrapper'>
-          <Input id='password-input' type='password' label='password'  ref = {passwordRef}/>
+          <Input
+            id='password-input'
+            type='password'
+            label='password'
+            ref={passwordRef}
+            checkOnBlur={handleInvalidPassword}
+          />
         </div>
         <input type='submit' />
       </form>
@@ -41,4 +59,3 @@ function Form() {
 }
 
 export default Form;
-
