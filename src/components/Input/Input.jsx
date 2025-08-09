@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormContext } from '../../providers/FormContext';
 import  './Input.css';
-function Input({ type, id, label, inputRef }) {
+const Input = React.forwardRef(({ type, id, label }, ref) => {
   const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState('');
   const [isValid, setIsValid] = useState(true)
@@ -10,7 +10,7 @@ function Input({ type, id, label, inputRef }) {
     <>
       <input
         className={(!isValid) ? 'error-input ' : ''}
-        ref={inputRef}
+        ref={ref}
         type={type}
         id={id}
         value={text}
@@ -21,6 +21,6 @@ function Input({ type, id, label, inputRef }) {
       />
     </>
   );
-}
+});
 
 export default Input;

@@ -18,10 +18,10 @@ function Form() {
       New Form
       <form onSubmit={handleFormSubmit} noValidate>
         <div className='wrapper input-wrapper'>
-          <Input id='email-input' type='text' label='email' inputRef = {emailRef} />
+          <Input id='email-input' type='text' label='email' ref = {emailRef} />
         </div>
         <div className='wrapper input-wrapper'>
-          <Input id='password-input' type='password' label='password'  inputRef = {passwordRef}/>
+          <Input id='password-input' type='password' label='password'  ref = {passwordRef}/>
         </div>
         <input type='submit' />
       </form>
