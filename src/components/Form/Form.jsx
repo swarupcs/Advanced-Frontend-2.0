@@ -11,6 +11,8 @@ function Form() {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log("formInput", formInput);
+    emailRef.current.setInvalid();
+    emailRef.current.shake();
   };
 
   return (

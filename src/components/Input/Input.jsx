@@ -1,16 +1,43 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { FormContext } from '../../providers/FormContext';
-import  './Input.css';
+import './Input.css';
 const Input = React.forwardRef(({ type, id, label }, ref) => {
   const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState('');
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState(true);
+  const [shake, setShake] = useState(false);
+
+  // Introduce a local ref
+  const localRef = useRef(null);
+
+  useEffect(() => {
+    setIsValid(true);
+    setShake(false);
+  }, [text])
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        focus: () => localRef.current.focus(),
+        setInvalid: () => setIsValid(false),
+        shake: () => setShake(true),
+      };
+    },
+    []
+  );
 
   return (
     <>
       <input
-        className={(!isValid) ? 'error-input ' : ''}
-        ref={ref}
+        className={`${!isValid ? 'error-input' : ''} ${shake ? 'shake' : ''} `}
+        ref={localRef}
         type={type}
         id={id}
         value={text}
