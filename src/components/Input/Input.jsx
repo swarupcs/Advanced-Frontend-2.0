@@ -1,13 +1,16 @@
 import { useContext, useState } from 'react';
 import { FormContext } from '../../providers/FormContext';
-
-function Input({ type, id, label }) {
+import  './Input.css';
+function Input({ type, id, label, inputRef }) {
   const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState('');
+  const [isValid, setIsValid] = useState(true)
 
   return (
     <>
       <input
+        className={(!isValid) ? 'error-input ' : ''}
+        ref={inputRef}
         type={type}
         id={id}
         value={text}

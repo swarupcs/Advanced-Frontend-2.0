@@ -1,11 +1,13 @@
 import './Form.css';
 
 import Input from '../Input/Input';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { FormContext } from '../../providers/FormContext';
 
 function Form() {
   const {formInput} = useContext(FormContext);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log("formInput", formInput);
@@ -16,10 +18,10 @@ function Form() {
       New Form
       <form onSubmit={handleFormSubmit} noValidate>
         <div className='wrapper input-wrapper'>
-          <Input id='email-input' type='text' label='email' />
+          <Input id='email-input' type='text' label='email' inputRef = {emailRef} />
         </div>
         <div className='wrapper input-wrapper'>
-          <Input id='password-input' type='password' label='password' />
+          <Input id='password-input' type='password' label='password'  inputRef = {passwordRef}/>
         </div>
         <input type='submit' />
       </form>
